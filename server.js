@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const exphbs = require('express-handlebars');
 const path = require('path');
 const nodemailer = require('nodemailer');
 
@@ -12,17 +11,15 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.render('contact');
+	res.render('contact');
 });
 
 app.post('/send', (req, res) => {
-    const output = `
+	const output = `
     <p>You have a new contact request</p>
     <h3>Contact details</h3>
     <ul>
@@ -35,29 +32,29 @@ app.post('/send', (req, res) => {
     <p>${req.body.message}</p>
     `;
 
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'nilanjan1729reso@gmail.com',
-            pass: '#John@1729'
-        }
-    });
-    let mailOptions = {
-        from: '"Nodemailer Contact" <nilanjan1729reso@gmail.com>',
-        to: 'nilanjan172nsvian@gmail.com',
-        subject: 'Node Contact Request',
-        text: 'Hello World !',
-        html: output
-    };
-    transporter.sendMail(mailOptions, function(error, info) {
-        if (error) {
-            return console.log(error);
-        }
-        console.log("Message sent: %s", info.messageId);
-        res.redirect('/');
-    });
+	let transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: 'nilanjan1729reso@gmail.com',
+			pass: '#John@1729',
+		},
+	});
+	let mailOptions = {
+		from: '"Nodemailer Contact" <nilanjan1729reso@gmail.com>',
+		to: 'nilanjan172nsvian@gmail.com',
+		subject: 'Node Contact Request',
+		text: 'Hello World !',
+		html: output,
+	};
+	transporter.sendMail(mailOptions, function (error, info) {
+		if (error) {
+			return console.log(error);
+		}
+		console.log('Message sent: %s', info.messageId);
+		res.redirect('/');
+	});
 });
 
 app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
+	console.log(`Server started on port ${PORT}`);
 });
