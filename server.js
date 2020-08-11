@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config({ path: './config.env' });
+}
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -29,21 +32,20 @@ app.post('/send', (req, res) => {
         <li>Phone: ${req.body.phone} </li>
     </ul>
     <h3>Message<h3>
-    <p>${req.body.message}</p>
+        <p style="margin-right:1rem">${req.body.message}</p>
     `;
 
 	let transporter = nodemailer.createTransport({
 		service: 'gmail',
 		auth: {
-			user: 'nilanjan1729reso@gmail.com',
-			pass: '#John@1729',
+			user: process.env.NODE_SENDER_MAIL,
+			pass: process.env.NODE_SENDER_MAIL_PASSWORD,
 		},
 	});
 	let mailOptions = {
-		from: '"Nodemailer Contact" <nilanjan1729reso@gmail.com>',
-		to: 'nilanjan172nsvian@gmail.com',
-		subject: 'Node Contact Request',
-		text: 'Hello World !',
+		from: '"Nodemailer Contact"',
+		to: process.env.NODE_MAIL_RECEIVER,
+		subject: 'Contact Request via Nodemailer',
 		html: output,
 	};
 	transporter.sendMail(mailOptions, function (error, info) {
