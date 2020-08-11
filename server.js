@@ -29,10 +29,9 @@ app.post('/send', (req, res) => {
         <li>Name: ${req.body.name} </li>
         <li>Company: ${req.body.company} </li>
         <li>Email: ${req.body.email} </li>
-        <li>Phone: ${req.body.phone} </li>
+		<li>Phone: ${req.body.phone} </li>
+		<li>Message: ${req.body.message} </li>
     </ul>
-    <h3>Message<h3>
-        <p style="margin-right:1rem">${req.body.message}</p>
     `;
 
 	let transporter = nodemailer.createTransport({
@@ -43,7 +42,7 @@ app.post('/send', (req, res) => {
 		},
 	});
 	let mailOptions = {
-		from: '"Nodemailer Contact"',
+		from: `Nodemailer Contact <${process.env.NODE_SENDER_MAIL}>`,
 		to: process.env.NODE_MAIL_RECEIVER,
 		subject: 'Contact Request via Nodemailer',
 		html: output,

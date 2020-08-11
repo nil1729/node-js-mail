@@ -80,12 +80,14 @@ ul {
     width: 100%;
     padding: 1em;
     border: 1px solid #c9e6ff;
+    outline: none;
 }
 
 .contact form button {
     background: #c9e6ff;
     border: 0;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .contact form button:hover,
@@ -104,9 +106,11 @@ ul {
         display: grid;
         grid-template-columns: 1fr 2fr;
     }
+
     .wrapper>* {
         padding: 2em;
     }
+
     .company-info h3,
     .company-info ul,
     .brand {
